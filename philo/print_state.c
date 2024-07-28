@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:44:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/07/28 18:02:33 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:26:04 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,22 @@ static void	print_message(t_data *data, struct timeval *timestamp, int id,
 		t_state state)
 {
 	time_t		curr_sec;
-	suseconds_t	curr_ms;
 	suseconds_t	curr_usec;
+	suseconds_t	t_ms;
 
 	curr_sec = timestamp->tv_sec - data->start_timestamp.tv_sec;
 	curr_usec = timestamp->tv_usec - data->start_timestamp.tv_usec;
-	curr_ms = curr_usec / 1000;
-	curr_usec = curr_usec % 1000;
+	t_ms = curr_sec * 1000 + curr_usec / 1000;
 	if (state == TAKEN_FORK || state == TAKEN_BOTH_FORKS)
-		printf("%s%ld:%d:%-3d %d %s%s\n", MAGENTA, curr_sec, curr_ms, curr_usec,
-			id, "has taken a fork", RESET);
+		printf("%s%d %d %s%s\n", MAGENTA, t_ms, id, "has taken a fork", RESET);
 	else if (state == EATING)
-		printf("%s%ld:%d:%-3d %d %s%s\n", GREEN, curr_sec, curr_ms, curr_usec,
-			id, "is eating", RESET);
+		printf("%s%d %d %s%s\n", GREEN, t_ms, id, "is eating", RESET);
 	else if (state == SLEEPING)
-		printf("%s%ld:%d:%-3d %d %s%s\n", GRAY, curr_sec, curr_ms, curr_usec,
-			id, "is sleeping", RESET);
+		printf("%s%d %d %s%s\n", GRAY, t_ms, id, "is sleeping", RESET);
 	else if (state == THINKING)
-		printf("%s%ld:%d:%-3d %d %s%s\n", TURQUOISE, curr_sec, curr_ms,
-			curr_usec, id, "is thinking", RESET);
+		printf("%s%d %d %s%s\n", TURQUOISE, t_ms, id, "is thinking", RESET);
 	else if (state == DEAD)
-		printf("%s%ld:%d:%-3d %d %s%s\n", RED, curr_sec, curr_ms, curr_usec, id,
-			"died", RESET);
+		printf("%s%d %d %s%s\n", RED, t_ms, id, "died", RESET);
 }
 
 void	print_state(t_data *data, t_philo *philo)

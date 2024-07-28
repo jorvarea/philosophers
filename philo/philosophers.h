@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/07/28 18:05:31 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:22:13 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ typedef struct s_philo
 
 void				print_state(t_data *data, t_philo *philo);
 int					ft_atoi(const char *str);
-void				test_printing(t_data *data);
+void				test_printing(t_data *data, int n_times);
 
 #endif /* PHILOSOPHERS_H */

@@ -22,7 +22,9 @@ FLAGS = -Wall -Wextra -Werror
 
 SRC = main.c \
       print_state.c \
-      ft_atoi.c
+      ft_atoi.c \
+      test.c 
+
 OBJ = $(SRC:%.c=obj/%.o)
 
 ################################################################################
