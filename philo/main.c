@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/07/28 13:28:23 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/07/28 13:29:14 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ static void	parse_input(t_input *input, char **args, int n_args)
 int	main(int argc, char **argv)
 {
 	t_input	input;
-	t_philo	philo;
 
-	philo.id = 33;
 	if (argc == 5 || argc == 6)
 	{
 		parse_input(&input, &argv[1], argc - 1);
