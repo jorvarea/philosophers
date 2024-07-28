@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/07/28 13:30:57 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:03:56 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ static void	parse_input(t_data *data, char **args, int n_args)
 		data->num_meals = (unsigned int)ft_atoi(args[4]);
 }
 
+static void	get_time_program_start(t_data *data)
+{
+	if (gettimeofday(&data->start_timestamp, NULL) != 0)
+	{
+		printf("Error: Could not get time of the day\n");
+		data->start_timestamp.tv_sec = 0;
+		data->start_timestamp.tv_usec = 0;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -29,6 +39,7 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		parse_input(&data, &argv[1], argc - 1);
+		get_time_program_start(&data);
 	}
 	else
 		printf("Error: Incorrect number of arguments\n");

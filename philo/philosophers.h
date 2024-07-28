@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/07/28 13:45:12 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:05:31 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@
 typedef enum e_state
 {
 	TAKEN_FORK = 0,
-	EATING = 1,
-	SLEEPING = 2,
-	THINKING = 3,
-	DEAD = 4
+	TAKEN_BOTH_FORKS = 1,
+	EATING = 2,
+	SLEEPING = 3,
+	THINKING = 4,
+	DEAD = 5
 }					t_state;
 
 // --------------------- STRUCTURES -------------------- //
@@ -60,18 +61,21 @@ typedef struct s_data
 	unsigned int	time2eat;
 	unsigned int	time2sleep;
 	unsigned int	num_meals;
+	struct timeval	start_timestamp;
 }					t_data;
 
 typedef struct s_philo
 {
 	int				id;
+	t_state			state;
 }					t_philo;
 
 // ----------------------------------------------------- //
 //                     MAIN FUNCTIONS                    //
 // ----------------------------------------------------- //
 
-void				print_state(t_philo *philo, t_state state);
+void				print_state(t_data *data, t_philo *philo);
 int					ft_atoi(const char *str);
+void				test_printing(t_data *data);
 
 #endif /* PHILOSOPHERS_H */
