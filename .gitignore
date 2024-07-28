@@ -1,0 +1,15 @@
+# Object files
+obj
+*.o
+
+# Libraries
+*.a
+
+# Executables
+*.exe
+*.out
+philo/philo
+
+# Extras
+.DS_Store
+.vscode
