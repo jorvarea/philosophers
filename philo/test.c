@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 18:03:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/09 20:54:32 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/09 21:08:45 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ void	test_print_philos(t_philo *philo)
 			printf("%sid: %d, time_death: %ld, %s%s\n", RED, philo->id,
 				philo->death_time, "DEAD", RESET);
 		philo = philo->next;
+		if (philo->id == 0)
+			return ;
 	}
 }
