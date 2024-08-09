@@ -21,6 +21,7 @@ FLAGS = -Wall -Wextra -Werror
 ################################################################################
 
 SRC = main.c \
+	  create_philosophers.c \
       print_state.c \
       ft_atoi.c \
       test.c 

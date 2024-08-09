@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/07/28 18:24:11 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:55:13 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,15 @@ static void	get_time_program_start(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	t_philo	*philo_l;
 
 	if (argc == 5 || argc == 6)
 	{
 		parse_input(&data, &argv[1], argc - 1);
 		get_time_program_start(&data);
+		philo_l = create_philosophers(&data);
+		if (!philo_l)
+			return (EXIT_FAILURE);
 	}
 	else
 		printf("Error: Incorrect number of arguments\n");

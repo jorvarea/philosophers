@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/07/28 18:22:13 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:51:17 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <pthread.h>
+# include <stdlib.h>
 
 // ------------------- COLOR MACROS -------------------- //
 
@@ -67,15 +69,24 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int				id;
+	pthread_t		*pthread;
 	t_state			state;
+	suseconds_t		death_time;
+	struct s_philo	*next;
+	struct s_philo	*prev;
 }					t_philo;
 
 // ----------------------------------------------------- //
 //                     MAIN FUNCTIONS                    //
 // ----------------------------------------------------- //
 
+t_philo				*create_philosophers(t_data *data);
+
+// ----------------------- UTILS ----------------------- //
+
 void				print_state(t_data *data, t_philo *philo);
 int					ft_atoi(const char *str);
-void				test_printing(t_data *data, int n_times);
+void				test_print_philos(t_philo *philo);
+void				test_printing_states(t_data *data, int n_times);
 
 #endif /* PHILOSOPHERS_H */
