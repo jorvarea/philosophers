@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 01:00:25 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 01:08:14 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	start_philo_routines(t_data *data, t_philo *philo)
 		if (philo->id == 0)
 			stop = true;
 	}
+    stop = false;
     while (!stop)
 	{
         printf("id: %d\n", philo->id);
