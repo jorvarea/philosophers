@@ -1,0 +1,2 @@
+Threads in C: https://www.geeksforgeeks.org/multithreading-in-c/
+Mutex: https://www.geeksforgeeks.org/mutex-lock-for-linux-thread-synchronization/
