@@ -14,7 +14,7 @@ else
 endif
 
 NAME = philo
-FLAGS = -Wall -Wextra -Werror -lpthread
+FLAGS = -Wall -Wextra -Werror
 
 ################################################################################
 ##                              SOURCES AND OBJECTS                           ##
@@ -22,6 +22,7 @@ FLAGS = -Wall -Wextra -Werror -lpthread
 
 SRC = main.c \
 	  create_philosophers.c \
+	  philo_routine.c \
       print_state.c \
       ft_atoi.c \
       test.c 

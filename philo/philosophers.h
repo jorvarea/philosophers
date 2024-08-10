@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 16:53:30 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:35:46 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 // ------------------- EXT LIBRARIES ------------------- //
 
+# include <pthread.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include <sys/time.h>
-# include <pthread.h>
 # include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 // ------------------- COLOR MACROS -------------------- //
 
@@ -46,11 +47,11 @@
 
 typedef enum e_state
 {
-	TAKEN_FORK = 0,
-	TAKEN_BOTH_FORKS = 1,
-	EATING = 2,
-	SLEEPING = 3,
-	THINKING = 4,
+	THINKING = 0,
+	TAKEN_FORK = 1,
+	TAKEN_BOTH_FORKS = 2,
+	EATING = 3,
+	SLEEPING = 4,
 	DEAD = 5
 }					t_state;
 
@@ -71,7 +72,14 @@ typedef struct s_philo
 	pthread_t		thread_id;
 	unsigned int	id;
 	t_state			state;
-	suseconds_t		death_time;
+	pthread_mutex_t	fork;
+	unsigned int	death_time;
+	unsigned int	time2die;
+	unsigned int	time2eat;
+	unsigned int	time2sleep;
+	bool			error;
+	bool			finished;
+	struct timeval	start_timestamp;
 	struct s_philo	*next;
 	struct s_philo	*prev;
 }					t_philo;
@@ -81,12 +89,12 @@ typedef struct s_philo
 // ----------------------------------------------------- //
 
 t_philo				*create_philosophers(t_data *data);
+void				*philo_routine(void *philo);
 
 // ----------------------- UTILS ----------------------- //
 
-void				print_state(t_data *data, t_philo *philo);
+void				print_state(t_philo *philo);
 int					ft_atoi(const char *str);
 void				test_print_philos(t_philo *philo);
-void				test_printing_states(t_data *data, int n_times);
 
 #endif /* PHILOSOPHERS_H */

@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:27:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 16:53:52 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:27:54 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@ static void	init_philo(t_data *data, t_philo *curr_philo, t_philo *prev_philo,
 	curr_philo->id = id;
 	curr_philo->state = THINKING;
 	curr_philo->death_time = data->time2die;
+	curr_philo->time2die = data->time2die;
+	curr_philo->time2eat = data->time2eat;
+	curr_philo->time2sleep = data->time2sleep;
+	curr_philo->error = false;
+	curr_philo->finished = false;
+	curr_philo->start_timestamp = data->start_timestamp;
+	pthread_mutex_init(&curr_philo->fork, NULL);
 	if (id != 0)
 	{
 		curr_philo->prev = prev_philo;
 		prev_philo->next = curr_philo;
 	}
-	// pthread_create(curr_philo->pthread, NULL, philo_routine, curr_philo);
+	pthread_create(&curr_philo->thread_id, NULL, philo_routine, curr_philo);
 }
 
 void	make_list_circular(t_philo *philo_list, t_philo *curr_philo)
