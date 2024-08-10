@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 19:50:02 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 00:18:26 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,29 @@ void	*philo_routine(void *philo_void)
 		print_state(philo);
 	}
 	return (NULL);
+}
+
+void	start_philo_routines(t_data *data, t_philo *philo)
+{
+    bool stop;
+    
+    stop = false;
+	while (!stop)
+	{
+		philo->death_time = data->time2die;
+		philo->start_timestamp = data->start_timestamp;
+        if (philo->id % 2 == 0)
+		    pthread_create(&philo->thread_id, NULL, philo_routine, philo);
+		philo = philo->next;
+		if (philo->id == 0)
+			stop = true;
+	}
+    while (!stop)
+	{
+        if (philo->id % 2 != 0)
+		    pthread_create(&philo->thread_id, NULL, philo_routine, philo);
+		philo = philo->next;
+		if (philo->id == 0)
+			stop = true;
+	}
 }

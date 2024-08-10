@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 20:28:18 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 00:06:44 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static void	wait_threads(t_philo *philo)
 	}
 }
 
-static void free_memory(t_philo *philo)
+static void	free_memory(t_philo *philo)
 {
-	t_philo *next;
+	t_philo	*next;
 
 	while (philo)
 	{
@@ -66,10 +66,11 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		parse_input(&data, &argv[1], argc - 1);
-		get_time_program_start(&data);
 		philo_l = create_philosophers(&data);
 		if (!philo_l)
 			return (EXIT_FAILURE);
+		get_time_program_start(&data);
+		start_philo_routines(&data, philo_l);
 		wait_threads(philo_l);
 		free_memory(philo_l);
 	}

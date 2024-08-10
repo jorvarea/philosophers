@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 19:35:46 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 00:06:29 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_philo
 
 t_philo				*create_philosophers(t_data *data);
 void				*philo_routine(void *philo);
+void				start_philo_routines(t_data *data, t_philo *philo);
 
 // ----------------------- UTILS ----------------------- //
 
