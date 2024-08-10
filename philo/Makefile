@@ -14,7 +14,7 @@ else
 endif
 
 NAME = philo
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -lpthread
 
 ################################################################################
 ##                              SOURCES AND OBJECTS                           ##
