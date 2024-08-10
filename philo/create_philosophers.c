@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:27:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 19:27:54 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/10 20:22:22 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	init_philo(t_data *data, t_philo *curr_philo, t_philo *prev_philo,
 		prev_philo->next = curr_philo;
 	}
 	pthread_create(&curr_philo->thread_id, NULL, philo_routine, curr_philo);
+	usleep(1000);
 }
 
 void	make_list_circular(t_philo *philo_list, t_philo *curr_philo)

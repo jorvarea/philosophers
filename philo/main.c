@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 20:19:49 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/10 20:28:18 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,27 @@ static void	get_time_program_start(t_data *data)
 	}
 }
 
-void	wait_threads(t_philo *philo)
+static void	wait_threads(t_philo *philo)
 {
 	while (philo)
 	{
 		pthread_join(philo->thread_id, NULL);
 		philo = philo->next;
+		if (philo->id == 0)
+			return ;
+	}
+}
+
+static void free_memory(t_philo *philo)
+{
+	t_philo *next;
+
+	while (philo)
+	{
+		pthread_mutex_destroy(&philo->fork);
+		next = philo->next;
+		free(philo);
+		philo = next;
 		if (philo->id == 0)
 			return ;
 	}
@@ -56,6 +71,7 @@ int	main(int argc, char **argv)
 		if (!philo_l)
 			return (EXIT_FAILURE);
 		wait_threads(philo_l);
+		free_memory(philo_l);
 	}
 	else
 		printf("Error: Incorrect number of arguments\n");
