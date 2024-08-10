@@ -14,7 +14,7 @@ else
 endif
 
 NAME = philo
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address -lasan
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 LINKS = -lpthread
 
 ################################################################################
