@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/09 21:37:53 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/10 16:53:30 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	pthread_t		*pthread;
-	int				id;
+	pthread_t		thread_id;
+	unsigned int	id;
 	t_state			state;
 	suseconds_t		death_time;
 	struct s_philo	*next;

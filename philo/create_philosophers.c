@@ -6,14 +6,14 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:27:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/09 21:06:58 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/10 16:53:52 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 static void	init_philo(t_data *data, t_philo *curr_philo, t_philo *prev_philo,
-		int id)
+		unsigned int id)
 {
 	curr_philo->id = id;
 	curr_philo->state = THINKING;
