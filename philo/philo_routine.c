@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/10 19:43:05 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:50:02 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	*philo_routine(void *philo_void)
 		print_state(philo);
 		philo->state = EATING;
 		print_state(philo);
-		usleep(philo->time2eat);
+		usleep(philo->time2eat * 1000);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		philo->state = SLEEPING;
 		print_state(philo);
-		usleep(philo->time2sleep);
+		usleep(philo->time2sleep * 1000);
 		philo->state = THINKING;
 		print_state(philo);
 	}

@@ -14,7 +14,8 @@ else
 endif
 
 NAME = philo
-FLAGS = -Wall -Wextra -Werror -lpthread
+FLAGS = -Wall -Wextra -Werror
+LINKS = -lpthread
 
 ################################################################################
 ##                              SOURCES AND OBJECTS                           ##
@@ -64,7 +65,7 @@ head :
 
 $(NAME) : line $(OBJ)
 	@echo "✦ -------------------------- ✦$(END)"
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LINKS)
 
 line :
 	@echo "$(GREEN) $(BOLD)"
