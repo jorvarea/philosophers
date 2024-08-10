@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 00:18:26 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 00:51:48 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ void	*philo_routine(void *philo_void)
 	while (!philo->error && !philo->finished)
 	{
 		pick_left_fork(philo);
-		print_state(philo);
 		pick_right_fork(philo);
-		print_state(philo);
 		philo->state = EATING;
 		print_state(philo);
 		usleep(philo->time2eat * 1000);
