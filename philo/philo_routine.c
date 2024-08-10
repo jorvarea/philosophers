@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 00:59:53 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 01:00:25 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	start_philo_routines(t_data *data, t_philo *philo)
 	}
     while (!stop)
 	{
-        printf("id: \n", philo->id);
+        printf("id: %d\n", philo->id);
         if (philo->id % 2 != 0)
 		    pthread_create(&philo->thread_id, NULL, philo_routine, philo);
 		philo = philo->next;
