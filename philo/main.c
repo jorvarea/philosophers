@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 18:09:04 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:12:35 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ static bool	parse_input(t_data *data, char **args, int n_args)
 	data->time2die = ft_atoi(args[1]);
 	data->time2eat = ft_atoi(args[2]);
 	data->time2sleep = ft_atoi(args[3]);
-	if (n_args == 5)
-		data->num_meals = ft_atoi(args[4]);
-	else
-		data->num_meals = -1;
 	valid_input = data->n_philo >= 0 && data->time2die >= 0
 		&& data->time2eat >= 0 && data->time2sleep >= 0;
+	if (valid_input && n_args == 5)
+	{
+		data->num_meals = ft_atoi(args[4]);
+		valid_input = data->num_meals >= 0;
+	}
+	else
+		data->num_meals = -1;
 	if (!valid_input)
 		printf("Error: Arguments should be positive integers\n");
 	return (valid_input);
