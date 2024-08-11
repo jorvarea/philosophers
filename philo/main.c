@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 22:03:51 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 23:49:55 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ static bool	parse_input(t_data *data, char **args, int n_args)
 	return (valid_input);
 }
 
+static void unlock_locked_forks(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->state_lock);
+	if (philo->state == EATING)
+	{
+		pthread_mutex_unlock(&philo->fork);
+        pthread_mutex_unlock(&philo->next->fork);
+	}
+	pthread_mutex_unlock(&philo->state_lock);
+}
+
 static void	free_memory(t_data *data, t_philo *philo)
 {
 	t_philo	*next;
@@ -43,6 +54,7 @@ static void	free_memory(t_data *data, t_philo *philo)
 	while (i < data->n_philo)
 	{
 		pthread_join(philo->thread_id, NULL);
+		unlock_locked_forks(philo);
 		pthread_mutex_destroy(&philo->fork);
 		pthread_mutex_destroy(&philo->state_lock);
 		next = philo->next;
