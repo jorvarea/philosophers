@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:27:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 02:59:15 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 04:26:07 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	init_philo(t_data *data, t_philo *curr_philo, t_philo *prev_philo,
 		unsigned int id)
 {
 	curr_philo->id = id;
+	curr_philo->meals_needed = data->num_meals;
 	curr_philo->meals_had = 0;
 	curr_philo->state = THINKING;
 	curr_philo->time2die = data->time2die;

@@ -47,7 +47,7 @@ void	*philo_routine(void *philo_void)
 		pick_left_fork(philo);
 		pick_right_fork(philo);
 		philo->state = EATING;
-        philo->meals_had++;
+		philo->meals_had++;
 		print_state(philo);
 		usleep(philo->time2eat * 1000);
 		philo->error_code = pthread_mutex_unlock(&philo->fork);
@@ -78,7 +78,7 @@ void	start_philo_routines(t_data *data, t_philo *philo)
 		if (philo->id == 0)
 			stop = true;
 	}
-    usleep(200);
+	usleep(200);
 	stop = false;
 	while (!stop)
 	{

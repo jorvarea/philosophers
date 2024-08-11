@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 02:59:00 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 04:36:32 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_data
 	unsigned int	time2die;
 	unsigned int	time2eat;
 	unsigned int	time2sleep;
-	unsigned int	num_meals;
+	int				num_meals;
 	struct timeval	start_timestamp;
 }					t_data;
 
@@ -73,6 +73,7 @@ typedef struct s_philo
 	unsigned int	id;
 	t_state			state;
 	pthread_mutex_t	fork;
+	int				meals_needed;
 	unsigned int	meals_had;
 	unsigned int	death_time;
 	unsigned int	time2die;
