@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 22:32:15 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 22:35:44 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	finish_threads(t_philo *philo)
 {
-	while (philo->state != FINISHED)
+	while (philo->state != FINISHED && philo->state != DEAD)
 	{
 		pthread_mutex_lock(&philo->state_lock);
 		philo->state = FINISHED;
@@ -48,10 +48,7 @@ static bool	check_finish_condition(t_philo *philo, int t_ms)
 	pthread_mutex_lock(&philo->state_lock);
 	finished = t_ms > philo->death_time;
 	if (finished)
-    {
 		philo->state = DEAD;
-        philo->state = FINISHED;
-    }
 	else if (!finished && philo->meals_needed >= 0
 		&& philo->meals_had >= philo->meals_needed)
 	{
@@ -77,10 +74,7 @@ void	*watcher_routine(void *philo_void)
 		if (t_ms >= 0)
 			stop = check_finish_condition(philo, t_ms);
 		else
-		{
 			printf("Error: Watcher couldn't get current time\n");
-			stop = true;
-		}
 		philo = philo->next;
 	}
 	finish_threads(philo);
