@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 04:37:50 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:50:30 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	all_completed_meals(t_philo *philo)
 	initial_id = philo->id;
 	while (all_completed)
 	{
-		if (philo->meals_had != (unsigned int)philo->meals_needed)
+		if (philo->meals_had < (unsigned int)philo->meals_needed)
 			all_completed = false;
 		philo = philo->next;
 		if (philo->id == initial_id)
