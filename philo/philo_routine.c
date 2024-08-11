@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 03:17:54 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 03:43:50 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	update_death_time(t_philo *philo)
 
 	t_ms = get_time_ms(philo);
 	if (t_ms >= 0)
-		philo->death_time = t_ms + philo->time2die + philo->time2eat;
+		philo->death_time = t_ms + philo->time2die;
 	else
 		philo->error_code = t_ms;
 }
