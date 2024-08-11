@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 15:01:48 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 15:05:41 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	main(int argc, char **argv)
 		if (!philo_l)
 			return (EXIT_FAILURE);
 		get_time_program_start(&data);
-		start_philo_routines(&data, philo_l);
+		if (data.n_philo == 1)
+			start_one_philo_routine(&data, philo_l);
+		else
+			start_philo_routines(&data, philo_l);
 		if (pthread_create(&watcher, NULL, watcher_routine, philo_l) != 0)
 			return (EXIT_FAILURE);
 		pthread_join(watcher, NULL);

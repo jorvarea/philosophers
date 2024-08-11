@@ -49,7 +49,8 @@ static bool	check_finish_condition(t_philo *philo, unsigned int t_ms)
 		philo->state = DEAD;
 		print_state(philo);
 	}
-	else if (!philo->finished && philo->meals_needed >= 0 && philo->meals_had == (unsigned int)philo->meals_needed)
+	else if (!philo->finished && philo->meals_needed >= 0
+		&& philo->meals_had == (unsigned int)philo->meals_needed)
 		philo->finished = all_completed_meals(philo);
 	return (philo->finished);
 }
