@@ -27,8 +27,7 @@ SRC = main.c \
 	  get_time.c \
 	  watcher_routine.c \
       print_state.c \
-      ft_atoi.c \
-      test.c 
+      ft_atoi.c 
 
 OBJ = $(SRC:%.c=obj/%.o)
 
