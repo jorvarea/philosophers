@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 00:06:29 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 02:36:32 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_philo
 	unsigned int	time2die;
 	unsigned int	time2eat;
 	unsigned int	time2sleep;
-	bool			error;
+	int				error_code;
 	bool			finished;
 	struct timeval	start_timestamp;
 	struct s_philo	*next;
@@ -89,13 +89,15 @@ typedef struct s_philo
 // ----------------------------------------------------- //
 
 t_philo				*create_philosophers(t_data *data);
-void				*philo_routine(void *philo);
+void				*philo_routine(void *philo_void);
+void				*watcher_routine(void *philo_void);
 void				start_philo_routines(t_data *data, t_philo *philo);
 
 // ----------------------- UTILS ----------------------- //
 
+void				get_time_program_start(t_data *data);
+int					get_time_ms(t_philo *philo);
 void				print_state(t_philo *philo);
 int					ft_atoi(const char *str);
-void				test_print_philos(t_philo *philo);
 
 #endif /* PHILOSOPHERS_H */

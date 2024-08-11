@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:27:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 00:03:00 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 01:19:51 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ static void	init_philo(t_data *data, t_philo *curr_philo, t_philo *prev_philo,
 	curr_philo->time2die = data->time2die;
 	curr_philo->time2eat = data->time2eat;
 	curr_philo->time2sleep = data->time2sleep;
-	curr_philo->error = false;
+	curr_philo->error_code = pthread_mutex_init(&curr_philo->fork, NULL);
 	curr_philo->finished = false;
-	pthread_mutex_init(&curr_philo->fork, NULL);
 	if (id != 0)
 	{
 		curr_philo->prev = prev_philo;

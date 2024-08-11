@@ -24,6 +24,8 @@ LINKS = -lpthread
 SRC = main.c \
 	  create_philosophers.c \
 	  philo_routine.c \
+	  get_time.c \
+	  watcher_routine.c \
       print_state.c \
       ft_atoi.c \
       test.c 
