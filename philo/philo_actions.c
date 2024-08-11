@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:44:22 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 21:54:35 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:58:45 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ static void	pick_right_fork(t_philo *philo)
 	pthread_mutex_lock(&philo->next->fork);
 	philo->state = TAKEN_BOTH_FORKS;
 	print_state(philo);
+}
+
+static void	update_death_time(t_philo *philo)
+{
+	int	t_ms;
+
+	t_ms = get_time_ms(philo);
+	if (t_ms >= 0)
+		philo->death_time = t_ms + philo->time2die;
+	else
+		printf("Error: Couldn't get current time\n");
 }
 
 void	philo_eat(t_philo *philo)

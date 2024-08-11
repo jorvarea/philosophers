@@ -6,22 +6,11 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 21:53:45 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:58:38 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static void	update_death_time(t_philo *philo)
-{
-	int	t_ms;
-
-	t_ms = get_time_ms(philo);
-	if (t_ms >= 0)
-		philo->death_time = t_ms + philo->time2die;
-	else
-		printf("Error: Couldn't get current time\n");
-}
 
 void	*philo_routine(void *philo_void)
 {
