@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:44:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 19:39:57 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:50:27 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,6 @@ void	print_state(t_philo *philo)
 	if (gettimeofday(&timestamp, NULL) == 0)
 		print_message(&philo->start_timestamp, &timestamp, philo->id,
 			philo->state);
-	else
-		printf("Error: Could not get time of the day\n");
-}
-
-void	print_state_dead(t_philo *philo)
-{
-	struct timeval	timestamp;
-
-	if (gettimeofday(&timestamp, NULL) == 0)
-		print_message(&philo->start_timestamp, &timestamp, philo->id, DEAD);
 	else
 		printf("Error: Could not get time of the day\n");
 }

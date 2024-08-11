@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 21:27:29 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:50:54 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ static void	free_memory(t_data *data, t_philo *philo)
 	{
 		pthread_detach(philo->thread_id);
 		pthread_mutex_destroy(&philo->fork);
-		pthread_mutex_destroy(&philo->meals_lock);
-		pthread_mutex_destroy(&philo->finish_condition_lock);
-		pthread_mutex_destroy(&philo->death_time_lock);
+		pthread_mutex_destroy(&philo->state_lock);
 		next = philo->next;
 		free(philo);
 		philo = next;

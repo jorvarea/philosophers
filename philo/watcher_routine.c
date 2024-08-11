@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 21:28:47 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:56:45 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void	finish_threads(t_philo *philo)
 {
-	while (!philo->finished)
+	while (philo->state != FINISHED)
 	{
-		pthread_mutex_lock(&philo->finish_condition_lock);
-		philo->finished = true;
-		pthread_mutex_unlock(&philo->finish_condition_lock);
+		pthread_mutex_lock(&philo->state_lock);
+		philo->state = FINISHED;
+		pthread_mutex_unlock(&philo->state_lock);
 		philo = philo->next;
 	}
 }
@@ -45,19 +45,18 @@ static bool	check_finish_condition(t_philo *philo, int t_ms)
 {
 	bool	finished;
 
-	pthread_mutex_lock(&philo->death_time_lock);
+	pthread_mutex_lock(&philo->state_lock);
 	finished = t_ms > philo->death_time;
-	pthread_mutex_unlock(&philo->death_time_lock);
-	pthread_mutex_lock(&philo->meals_lock);
 	if (finished)
-		print_state_dead(philo);
+		philo->state = DEAD;
 	else if (!finished && philo->meals_needed >= 0
 		&& philo->meals_had >= philo->meals_needed)
+	{
 		finished = all_completed_meals(philo);
-	pthread_mutex_unlock(&philo->meals_lock);
-	pthread_mutex_lock(&philo->finish_condition_lock);
-	philo->finished = finished;
-	pthread_mutex_unlock(&philo->finish_condition_lock);
+		if (finished)
+			philo->state = FINISHED;
+	}
+	pthread_mutex_unlock(&philo->state_lock);
 	return (finished);
 }
 

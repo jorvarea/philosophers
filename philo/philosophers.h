@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 21:23:48 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:53:29 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef enum e_state
 	TAKEN_BOTH_FORKS = 2,
 	EATING = 3,
 	SLEEPING = 4,
-	DEAD = 5
+	DEAD = 5,
+	FINISHED = 6
 }					t_state;
 
 // --------------------- STRUCTURES -------------------- //
@@ -73,16 +74,13 @@ typedef struct s_philo
 	int				id;
 	t_state			state;
 	pthread_mutex_t	fork;
-	pthread_mutex_t	meals_lock;
-	pthread_mutex_t	finish_condition_lock;
-	pthread_mutex_t	death_time_lock;
+	pthread_mutex_t	state_lock;
 	int				meals_needed;
 	int				meals_had;
 	int				death_time;
 	int				time2die;
 	int				time2eat;
 	int				time2sleep;
-	bool			finished;
 	struct timeval	start_timestamp;
 	struct s_philo	*next;
 	struct s_philo	*prev;
@@ -97,13 +95,14 @@ void				*philo_routine(void *philo_void);
 void				*watcher_routine(void *philo_void);
 void				start_philo_routines(t_data *data, t_philo *philo);
 void				start_one_philo_routine(t_data *data, t_philo *philo);
+void				philo_eat(t_philo *philo);
+void				philo_sleep(t_philo *philo);
 
 // ----------------------- UTILS ----------------------- //
 
 void				get_time_program_start(t_data *data);
 int					get_time_ms(t_philo *philo);
 void				print_state(t_philo *philo);
-void				print_state_dead(t_philo *philo);
 int					ft_atoi(const char *str);
 
 #endif /* PHILOSOPHERS_H */
