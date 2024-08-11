@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 19:51:08 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:01:11 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static void	finish_threads(t_philo *philo)
 {
 	while (!philo->finished)
 	{
+        pthread_mutex_lock(&philo->finish_condition_lock);
 		philo->finished = true;
+        pthread_mutex_unlock(&philo->finish_condition_lock);
 		philo = philo->next;
 	}
 }
