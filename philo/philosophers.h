@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 18:06:41 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 19:40:22 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ typedef struct s_philo
 	int				id;
 	t_state			state;
 	pthread_mutex_t	fork;
+	pthread_mutex_t	meals_lock;
+	pthread_mutex_t	finish_condition_lock;
 	int				meals_needed;
 	int				meals_had;
 	int				death_time;
 	int				time2die;
 	int				time2eat;
 	int				time2sleep;
-	int				error_code;
 	bool			finished;
 	struct timeval	start_timestamp;
 	struct s_philo	*next;
@@ -101,6 +102,7 @@ void				start_one_philo_routine(t_data *data, t_philo *philo);
 void				get_time_program_start(t_data *data);
 int					get_time_ms(t_philo *philo);
 void				print_state(t_philo *philo);
+void				print_state_dead(t_philo *philo);
 int					ft_atoi(const char *str);
 
 #endif /* PHILOSOPHERS_H */

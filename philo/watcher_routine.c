@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 18:07:47 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 19:45:23 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,20 @@ static bool	all_completed_meals(t_philo *philo)
 
 static bool	check_finish_condition(t_philo *philo, int t_ms)
 {
-	philo->finished = t_ms > philo->death_time || philo->error_code != 0;
-	if (philo->error_code != 0)
-		printf("Error code: %d\n", philo->error_code);
-	else if (philo->finished)
-	{
-		philo->state = DEAD;
-		print_state(philo);
-	}
+	bool	finished;
+
+	pthread_mutex_lock(&philo->finish_condition_lock);
+	pthread_mutex_lock(&philo->meals_lock);
+	philo->finished = t_ms > philo->death_time;
+	if (philo->finished)
+		print_state_dead(philo);
 	else if (!philo->finished && philo->meals_needed >= 0
-		&& philo->meals_had == (int)philo->meals_needed)
+		&& philo->meals_had == philo->meals_needed)
 		philo->finished = all_completed_meals(philo);
-	return (philo->finished);
+	finished = philo->finished;
+	pthread_mutex_unlock(&philo->finish_condition_lock);
+	pthread_mutex_unlock(&philo->meals_lock);
+	return (finished);
 }
 
 void	*watcher_routine(void *philo_void)

@@ -25,6 +25,7 @@ SRC = main.c \
 	  create_philosophers.c \
 	  philo_routine.c \
 	  one_philo_routine.c \
+	  start_philo_routines.c \
 	  get_time.c \
 	  watcher_routine.c \
       print_state.c \
