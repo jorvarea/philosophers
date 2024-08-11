@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:06:10 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 22:13:18 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 22:16:17 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	pick_left_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->fork);
 	philo->state = TAKEN_FORK;
 	print_state(philo);
 }
