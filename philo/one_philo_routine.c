@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:06:10 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 22:07:45 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 22:08:30 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	*one_philo_routine(void *philo_void)
 		pthread_mutex_lock(&philo->state_lock);
 	}
 	print_state(philo);
-	pthread_mutex_unlock(&philo->state);
+	pthread_mutex_unlock(&philo->state_lock);
 	return (NULL);
 }
 
