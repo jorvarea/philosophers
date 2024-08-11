@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 19:40:22 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:23:48 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_philo
 	pthread_mutex_t	fork;
 	pthread_mutex_t	meals_lock;
 	pthread_mutex_t	finish_condition_lock;
+	pthread_mutex_t	death_time_lock;
 	int				meals_needed;
 	int				meals_had;
 	int				death_time;
