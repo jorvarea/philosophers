@@ -6,28 +6,35 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 15:19:55 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:09:04 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	parse_input(t_data *data, char **args, int n_args)
+static bool	parse_input(t_data *data, char **args, int n_args)
 {
-	data->n_philo = (unsigned int)ft_atoi(args[0]);
-	data->time2die = (unsigned int)ft_atoi(args[1]);
-	data->time2eat = (unsigned int)ft_atoi(args[2]);
-	data->time2sleep = (unsigned int)ft_atoi(args[3]);
+	bool	valid_input;
+
+	data->n_philo = ft_atoi(args[0]);
+	data->time2die = ft_atoi(args[1]);
+	data->time2eat = ft_atoi(args[2]);
+	data->time2sleep = ft_atoi(args[3]);
 	if (n_args == 5)
-		data->num_meals = (unsigned int)ft_atoi(args[4]);
+		data->num_meals = ft_atoi(args[4]);
 	else
 		data->num_meals = -1;
+	valid_input = data->n_philo >= 0 && data->time2die >= 0
+		&& data->time2eat >= 0 && data->time2sleep >= 0;
+	if (!valid_input)
+		printf("Error: Arguments should be positive integers\n");
+	return (valid_input);
 }
 
 static void	free_memory(t_data *data, t_philo *philo)
 {
-	t_philo			*next;
-	unsigned int	i;
+	t_philo	*next;
+	int		i;
 
 	i = 0;
 	while (i < data->n_philo)
@@ -49,7 +56,8 @@ int	main(int argc, char **argv)
 
 	if (argc == 5 || argc == 6)
 	{
-		parse_input(&data, &argv[1], argc - 1);
+		if (!parse_input(&data, &argv[1], argc - 1))
+			return (EXIT_FAILURE);
 		philo_l = create_philosophers(&data);
 		if (!philo_l)
 			return (EXIT_FAILURE);

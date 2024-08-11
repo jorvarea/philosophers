@@ -6,14 +6,14 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:27:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 04:26:07 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:07:05 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 static void	init_philo(t_data *data, t_philo *curr_philo, t_philo *prev_philo,
-		unsigned int id)
+		int id)
 {
 	curr_philo->id = id;
 	curr_philo->meals_needed = data->num_meals;
@@ -39,10 +39,10 @@ void	make_list_circular(t_philo *philo_list, t_philo *curr_philo)
 
 t_philo	*create_philosophers(t_data *data)
 {
-	t_philo			*philo_list;
-	t_philo			*curr_philo;
-	t_philo			*prev_philo;
-	unsigned int	i;
+	t_philo	*philo_list;
+	t_philo	*curr_philo;
+	t_philo	*prev_philo;
+	int		i;
 
 	i = 0;
 	while (i < data->n_philo)

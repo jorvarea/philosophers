@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 15:08:56 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:06:41 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ typedef enum e_state
 
 typedef struct s_data
 {
-	unsigned int	n_philo;
-	unsigned int	time2die;
-	unsigned int	time2eat;
-	unsigned int	time2sleep;
+	int				n_philo;
+	int				time2die;
+	int				time2eat;
+	int				time2sleep;
 	int				num_meals;
 	struct timeval	start_timestamp;
 }					t_data;
@@ -70,15 +70,15 @@ typedef struct s_data
 typedef struct s_philo
 {
 	pthread_t		thread_id;
-	unsigned int	id;
+	int				id;
 	t_state			state;
 	pthread_mutex_t	fork;
 	int				meals_needed;
-	unsigned int	meals_had;
-	unsigned int	death_time;
-	unsigned int	time2die;
-	unsigned int	time2eat;
-	unsigned int	time2sleep;
+	int				meals_had;
+	int				death_time;
+	int				time2die;
+	int				time2eat;
+	int				time2sleep;
 	int				error_code;
 	bool			finished;
 	struct timeval	start_timestamp;

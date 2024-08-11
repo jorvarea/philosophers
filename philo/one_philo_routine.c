@@ -34,5 +34,5 @@ void	start_one_philo_routine(t_data *data, t_philo *philo)
 	philo->death_time = data->time2die;
 	philo->start_timestamp = data->start_timestamp;
 	philo->error_code = pthread_create(&philo->thread_id, NULL,
-		one_philo_routine, philo);
+			one_philo_routine, philo);
 }

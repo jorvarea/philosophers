@@ -73,7 +73,7 @@ void	start_philo_routines(t_data *data, t_philo *philo)
 		philo->start_timestamp = data->start_timestamp;
 		if (philo->id % 2 == 0)
 			philo->error_code = pthread_create(&philo->thread_id, NULL,
-				philo_routine, philo);
+					philo_routine, philo);
 		philo = philo->next;
 		if (philo->id == 0)
 			stop = true;
@@ -84,7 +84,7 @@ void	start_philo_routines(t_data *data, t_philo *philo)
 	{
 		if (philo->id % 2 != 0)
 			philo->error_code = pthread_create(&philo->thread_id, NULL,
-				philo_routine, philo);
+					philo_routine, philo);
 		philo = philo->next;
 		if (philo->id == 0)
 			stop = true;

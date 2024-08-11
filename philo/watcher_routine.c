@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 17:50:30 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:07:47 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static void	finish_threads(t_philo *philo)
 
 static bool	all_completed_meals(t_philo *philo)
 {
-	bool			all_completed;
-	unsigned int	initial_id;
+	bool	all_completed;
+	int		initial_id;
 
 	all_completed = true;
 	initial_id = philo->id;
 	while (all_completed)
 	{
-		if (philo->meals_had < (unsigned int)philo->meals_needed)
+		if (philo->meals_had < philo->meals_needed)
 			all_completed = false;
 		philo = philo->next;
 		if (philo->id == initial_id)
@@ -39,7 +39,7 @@ static bool	all_completed_meals(t_philo *philo)
 	return (all_completed);
 }
 
-static bool	check_finish_condition(t_philo *philo, unsigned int t_ms)
+static bool	check_finish_condition(t_philo *philo, int t_ms)
 {
 	philo->finished = t_ms > philo->death_time || philo->error_code != 0;
 	if (philo->error_code != 0)
@@ -50,7 +50,7 @@ static bool	check_finish_condition(t_philo *philo, unsigned int t_ms)
 		print_state(philo);
 	}
 	else if (!philo->finished && philo->meals_needed >= 0
-		&& philo->meals_had == (unsigned int)philo->meals_needed)
+		&& philo->meals_had == (int)philo->meals_needed)
 		philo->finished = all_completed_meals(philo);
 	return (philo->finished);
 }
