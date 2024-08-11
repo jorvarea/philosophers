@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 19:35:12 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:11:55 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ static void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->meals_lock);
 	philo->meals_had++;
 	pthread_mutex_unlock(&philo->meals_lock);
+    pthread_mutex_lock(&philo->finish_condition_lock);
 	update_death_time(philo);
+    pthread_mutex_unlock(&philo->finish_condition_lock);
 }
 
 void	*philo_routine(void *philo_void)
