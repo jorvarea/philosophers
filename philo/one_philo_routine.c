@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:06:10 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 19:33:37 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:59:59 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	*one_philo_routine(void *philo_void)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_void;
-	while (!philo->finished)
+	while (philo->state != DEAD && philo->state != FINISHED)
 		pick_left_fork(philo);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:44:22 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 21:58:45 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 22:01:04 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,30 @@ static void	update_death_time(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->state_lock);
-	pick_left_fork(philo);
-	pick_right_fork(philo);
-	philo->state = EATING;
-	print_state(philo);
-	usleep(philo->time2eat * 1000);
-	pthread_mutex_unlock(&philo->fork);
-	pthread_mutex_unlock(&philo->next->fork);
-	philo->meals_had++;
-	update_death_time(philo);
-	pthread_mutex_lock(&philo->state_lock);
+    if (philo->state != DEAD && philo->state != FINISHED)
+    {
+        pthread_mutex_lock(&philo->state_lock);
+        pick_left_fork(philo);
+        pick_right_fork(philo);
+        philo->state = EATING;
+        print_state(philo);
+        usleep(philo->time2eat * 1000);
+        pthread_mutex_unlock(&philo->fork);
+        pthread_mutex_unlock(&philo->next->fork);
+        philo->meals_had++;
+        update_death_time(philo);
+        pthread_mutex_lock(&philo->state_lock);
+    }
 }
 
 void	philo_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->state_lock);
-	philo->state = SLEEPING;
-	print_state(philo);
-	usleep(philo->time2sleep * 1000);
-	pthread_mutex_unlock(&philo->state_lock);
+    if (philo->state != DEAD && philo->state != FINISHED)
+    {
+        pthread_mutex_lock(&philo->state_lock);
+        philo->state = SLEEPING;
+        print_state(philo);
+        usleep(philo->time2sleep * 1000);
+        pthread_mutex_unlock(&philo->state_lock); 
+    }
 }
