@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 15:16:34 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 15:19:55 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	free_memory(t_data *data, t_philo *philo)
 	i = 0;
 	while (i < data->n_philo)
 	{
-		pthread_join(philo->thread_id, NULL);
+		pthread_detach(philo->thread_id);
 		pthread_mutex_destroy(&philo->fork);
 		next = philo->next;
 		free(philo);
