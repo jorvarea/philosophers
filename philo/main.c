@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 02:34:38 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 02:46:48 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@ static void	parse_input(t_data *data, char **args, int n_args)
 	data->time2sleep = (unsigned int)ft_atoi(args[3]);
 	if (n_args == 5)
 		data->num_meals = (unsigned int)ft_atoi(args[4]);
-}
-
-static void	wait_threads(t_philo *philo, pthread_t watcher)
-{
-	pthread_join(watcher, NULL);
-	while (philo)
-	{
-		pthread_join(philo->thread_id, NULL);
-		philo = philo->next;
-		if (philo->id == 0)
-			return ;
-	}
 }
 
 static void	free_memory(t_data *data, t_philo *philo)
@@ -66,7 +54,7 @@ int	main(int argc, char **argv)
 		start_philo_routines(&data, philo_l);
 		if (pthread_create(&watcher, NULL, watcher_routine, philo_l) != 0)
 			return (EXIT_FAILURE);
-		wait_threads(philo_l, watcher);
+		pthread_join(watcher, NULL);
 		free_memory(&data, philo_l);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 02:38:41 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/11 02:51:13 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@ static void	finish_threads(t_philo *philo)
 	}
 }
 
-static void	check_error_code(int error_code)
+static void	check_finish_condition(t_philo *philo)
 {
-	if (error_code != 0)
-		printf("Error code: %d\n", error_code);
+	if (philo->error_code != 0)
+		printf("Error code: %d\n", philo->error_code);
+    else if (philo->finished)
+    {
+        philo->state = DEAD;
+        print_state(philo);
+    }
 }
 
 void	*watcher_routine(void *philo_void)
@@ -43,7 +48,7 @@ void	*watcher_routine(void *philo_void)
 			philo->finished = (unsigned int)t_ms > philo->death_time
 				|| philo->error_code != 0;
 			stop = philo->finished;
-			check_error_code(philo->error_code);
+			check_finish_condition(philo);
 		}
 		else
 		{
