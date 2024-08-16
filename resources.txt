@@ -1,2 +1,4 @@
 Threads in C: https://www.geeksforgeeks.org/multithreading-in-c/
 Mutex: https://www.geeksforgeeks.org/mutex-lock-for-linux-thread-synchronization/
+Semaphores: https://www.geeksforgeeks.org/semaphores-in-process-synchronization/
+POSIX implementation of semaphores in C: https://www.geeksforgeeks.org/use-posix-semaphores-c/
