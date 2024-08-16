@@ -31,6 +31,11 @@ SRC = main.c \
 	  watcher_routine.c \
       print_state.c \
       ft_atoi.c \
+	  ft_itoa.c \
+	  ft_strlen.c \
+	  ft_strjoin.c \
+	  safe_fork.c \
+	  safe_malloc.c \
 	  safe_fork.c
 
 OBJ = $(SRC:%.c=obj/%.o)

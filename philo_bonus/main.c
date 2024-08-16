@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 12:35:49 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:24:16 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,28 @@ static bool	parse_input(t_data *data, char **args, int n_args)
 	return (valid_input);
 }
 
+static void init_sem_forks(t_data *data)
+{
+	data->forks_sem = sem_open("/forks", O_CREAT, 0600, data->n_philo);
+	if (data->forks_sem == SEM_FAILED)
+	{
+		printf("Error: sem_open failed\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void unlock_locked_forks(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->state_lock);
+	pthread_mutex_lock(&philo->prev->state_lock);
+	if (philo->state == EATING)
+		pthread_mutex_unlock(&philo->fork);
+	else if (philo->prev->state == EATING)
+		pthread_mutex_unlock(&philo->fork);
+	pthread_mutex_unlock(&philo->state_lock);
+	pthread_mutex_unlock(&philo->prev->state_lock);
+}
+
 static void	free_memory(t_data *data, t_philo *philo)
 {
 	t_philo	*next;
@@ -42,7 +64,12 @@ static void	free_memory(t_data *data, t_philo *philo)
 	i = 0;
 	while (i < data->n_philo)
 	{
+		pthread_join(philo->thread_id, NULL);
+		unlock_locked_forks(philo);
+		pthread_mutex_destroy(&philo->fork);
+		pthread_mutex_destroy(&philo->state_lock);
 		next = philo->next;
+		free(philo->sem_name);
 		free(philo);
 		philo = next;
 		i++;
@@ -58,14 +85,15 @@ int	main(int argc, char **argv)
 	{
 		if (!parse_input(&data, &argv[1], argc - 1))
 			return (EXIT_FAILURE);
+		init_forks_sem(&data);
 		philo_l = create_philosophers(&data);
-		if (!philo_l)
-			return (EXIT_FAILURE);
 		get_time_program_start(&data);
 		if (data.n_philo == 1)
 			start_one_philo_routine(&data, philo_l);
 		else
 			start_philo_routines(&data, philo_l);
+		// Work in progress
+		watcher_routine(philo_l);
 		free_memory(&data, philo_l);
 	}
 	else

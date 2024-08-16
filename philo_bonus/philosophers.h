@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 12:55:31 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:25:44 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 // ------------------- EXT LIBRARIES ------------------- //
 
-# include <pthread.h>
 # include <semaphore.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
 
 // ------------------- COLOR MACROS -------------------- //
 
@@ -70,6 +70,7 @@ typedef struct s_data
 	int				time2eat;
 	int				time2sleep;
 	int				num_meals;
+	sem_t			forks_sem;
 	struct timeval	start_timestamp;
 }					t_data;
 
@@ -78,6 +79,9 @@ typedef struct s_philo
 	pid_t			pid;
 	int				id;
 	t_state			state;
+	char			*sem_name;
+	sem_t			*finished_eating_sem;
+	sem_t			*forks_sem;
 	int				meals_needed;
 	int				meals_had;
 	int				death_time;
@@ -89,13 +93,22 @@ typedef struct s_philo
 	struct s_philo	*prev;
 }					t_philo;
 
+typedef struct s_watcher
+{
+	pthread_t	thread_id;
+	t_philo		*philo;
+	char		*watcher_name;
+	sem_t		finished_sem;
+	bool		finished;
+}					t_watcher;
+
 // ----------------------------------------------------- //
 //                     MAIN FUNCTIONS                    //
 // ----------------------------------------------------- //
 
 t_philo				*create_philosophers(t_data *data);
-void				*philo_routine(void *philo_void);
-void				*watcher_routine(void *philo_void);
+void				philo_routine(t_philo *philo);
+void				watcher_routine(t_philo *philo_l);
 void				start_philo_routines(t_data *data, t_philo *philo);
 void				start_one_philo_routine(t_data *data, t_philo *philo);
 void				philo_eat(t_philo *philo);
@@ -107,5 +120,12 @@ void				get_time_program_start(t_data *data);
 int					get_time_ms(t_philo *philo);
 void				print_state(t_philo *philo);
 int					ft_atoi(const char *str);
+char				*ft_itoa(int n);
+void				*safe_malloc(size_t size);
+pid_t				safe_fork(void);
+char				*generate_sem_name(int philo_id);
+char				*generate_watcher_sem_name(int philo_id);
+size_t				ft_strlen(const char *str);
+char				*ft_strjoin(char const *s1, char const *s2);
 
 #endif /* PHILOSOPHERS_H */

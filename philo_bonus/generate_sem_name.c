@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   generate_sem_name.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 17:07:17 by jorvarea         ###   ########.fr       */
+/*   Created: 2024/08/16 14:48:16 by jorvarea          #+#    #+#             */
+/*   Updated: 2024/08/16 17:18:06 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	philo_routine(t_philo *philo)
+char	*generate_sem_name(int philo_id)
 {
-	while (true)
-	{
-		sem_wait(philo->finished_eating_sem);
-		philo_eat(philo);
-		sem_post(philo->finished_eating_sem);
-		philo_sleep(philo);
-		philo->state = THINKING;
-		print_state(philo);
-	}
+	char	*name;
+	char	*id_str;
+
+	id_str = ft_itoa(philo_id);
+	name = ft_strjoin("/finished_eating_sem_philo_", id_str);
+	free(id_str);
+	return (name);
+}
+
+char	*generate_watcher_sem_name(int philo_id)
+{
+	char	*name;
+	char	*id_str;
+
+	id_str = ft_itoa(philo_id);
+	name = ft_strjoin("/watcher_", id_str);
+	free(id_str);
+	return (name);
 }
