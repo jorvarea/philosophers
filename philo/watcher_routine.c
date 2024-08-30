@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/30 15:04:08 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:55:35 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static bool	check_finish_condition(t_philo *philo, int t_ms)
 	bool	finished;
 
 	pthread_mutex_lock(&philo->state_lock);
-	finished = t_ms > philo->death_time + 1;
+	finished = t_ms > philo->death_time + 2;
 	if (finished)
 	{
 		philo->state = DEAD;

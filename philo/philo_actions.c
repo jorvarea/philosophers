@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:44:22 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/30 14:55:01 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:04:02 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ static void	pick_left_fork(t_philo *philo)
     if (philo->state != DEAD && philo->state != FINISHED)
     {
         philo->state = TAKEN_FORK;
-        pthread_mutex_unlock(&philo->state_lock);
         print_state(philo);
     }
-    else
-        pthread_mutex_unlock(&philo->state_lock);
+    pthread_mutex_unlock(&philo->state_lock);
 }
 
 static void	pick_right_fork(t_philo *philo)
@@ -32,12 +30,10 @@ static void	pick_right_fork(t_philo *philo)
     pthread_mutex_lock(&philo->state_lock);
     if (philo->state != DEAD && philo->state != FINISHED)
     {
-        philo->state = TAKEN_BOTH_FORKS;
-        pthread_mutex_unlock(&philo->state_lock);
+        philo->state = TAKEN_FORK;
         print_state(philo);
     }
-    else
-        pthread_mutex_unlock(&philo->state_lock);
+    pthread_mutex_unlock(&philo->state_lock);
 }
 
 static void	update_death_time(t_philo *philo)
@@ -53,8 +49,16 @@ static void	update_death_time(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-    pick_left_fork(philo);
-    pick_right_fork(philo);
+    if (philo->id % 2 == 0)
+    {
+        pick_left_fork(philo);
+        pick_right_fork(philo);
+    }
+    else
+    {
+        pick_right_fork(philo);
+        pick_left_fork(philo);
+    }
     pthread_mutex_lock(&philo->state_lock);
     if (philo->state != DEAD && philo->state != FINISHED)
     {
@@ -77,8 +81,8 @@ void	philo_sleep(t_philo *philo)
     if (philo->state != DEAD && philo->state != FINISHED)
     {
         philo->state = SLEEPING;
-        pthread_mutex_unlock(&philo->state_lock);
         print_state(philo);
+        pthread_mutex_unlock(&philo->state_lock);
         usleep(philo->time2sleep * 1000);
     }
     else

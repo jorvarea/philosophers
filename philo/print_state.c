@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:44:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/30 12:37:21 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:05:14 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	print_message(struct timeval *start_timestamp,
 	curr_sec = timestamp->tv_sec - start_timestamp->tv_sec;
 	curr_usec = timestamp->tv_usec - start_timestamp->tv_usec;
 	t_ms = curr_sec * 1000 + curr_usec / 1000;
-	if (state == TAKEN_FORK || state == TAKEN_BOTH_FORKS)
+	if (state == TAKEN_FORK)
 		printf("%s%ld %d %s%s\n", MAGENTA, t_ms, id, "has taken a fork", RESET);
 	else if (state == EATING)
 		printf("%s%ld %d %s%s\n", GREEN, t_ms, id, "is eating", RESET);
