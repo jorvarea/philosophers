@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:06:10 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/11 22:40:00 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:56:53 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	pick_left_fork(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->fork);
 	philo->state = TAKEN_FORK;
 	print_state(philo);
 }
@@ -28,11 +29,11 @@ static void	*one_philo_routine(void *philo_void)
 	while (philo->state != DEAD && philo->state != FINISHED)
 	{
 		pthread_mutex_unlock(&philo->state_lock);
-		usleep(1000);
+		usleep(100);
 		pthread_mutex_lock(&philo->state_lock);
 	}
-	print_state(philo);
 	pthread_mutex_unlock(&philo->state_lock);
+	pthread_mutex_unlock(&philo->fork);
 	return (NULL);
 }
 

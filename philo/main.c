@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/12 00:03:32 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/08/30 15:06:09 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ static bool	parse_input(t_data *data, char **args, int n_args)
 static void unlock_locked_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->state_lock);
-	pthread_mutex_lock(&philo->prev->state_lock);
 	if (philo->state == EATING)
+	{
 		pthread_mutex_unlock(&philo->fork);
-	else if (philo->prev->state == EATING)
-		pthread_mutex_unlock(&philo->fork);
+		if (philo->next->id != philo->id)
+		{
+			pthread_mutex_lock(&philo->next->state_lock);
+			pthread_mutex_unlock(&philo->next->fork);
+			pthread_mutex_unlock(&philo->next->state_lock);
+		}
+	}
 	pthread_mutex_unlock(&philo->state_lock);
-	pthread_mutex_unlock(&philo->prev->state_lock);
 }
 
 static void	free_memory(t_data *data, t_philo *philo)
@@ -54,8 +58,8 @@ static void	free_memory(t_data *data, t_philo *philo)
 	i = 0;
 	while (i < data->n_philo)
 	{
-		pthread_join(philo->thread_id, NULL);
 		unlock_locked_forks(philo);
+		pthread_join(philo->thread_id, NULL);
 		pthread_mutex_destroy(&philo->fork);
 		pthread_mutex_destroy(&philo->state_lock);
 		next = philo->next;
