@@ -22,6 +22,7 @@ LINKS = -lpthread -lrt
 ################################################################################
 
 SRC = main.c \
+	  check_death_whileusleep.c \
 	  create_philosophers.c \
 	  philo_routine.c \
 	  one_philo_routine.c \

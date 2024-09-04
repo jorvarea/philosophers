@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 17:25:44 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:53:57 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // ------------------- EXT LIBRARIES ------------------- //
 
+# include <pthread.h>
 # include <semaphore.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -22,6 +23,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <limits.h>
+# include <fcntl.h>
 
 // ------------------- COLOR MACROS -------------------- //
 
@@ -70,7 +72,7 @@ typedef struct s_data
 	int				time2eat;
 	int				time2sleep;
 	int				num_meals;
-	sem_t			forks_sem;
+	sem_t			*forks_sem;
 	struct timeval	start_timestamp;
 }					t_data;
 
@@ -108,11 +110,13 @@ typedef struct s_watcher
 
 t_philo				*create_philosophers(t_data *data);
 void				philo_routine(t_philo *philo);
+bool 				is_philo_dead(t_philo *philo);
 void				watcher_routine(t_philo *philo_l);
 void				start_philo_routines(t_data *data, t_philo *philo);
 void				start_one_philo_routine(t_data *data, t_philo *philo);
 void				philo_eat(t_philo *philo);
 void				philo_sleep(t_philo *philo);
+void 				check_death_while_usleep(int t_ms, t_philo *philo);
 
 // ----------------------- UTILS ----------------------- //
 
