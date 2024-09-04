@@ -24,11 +24,11 @@ void	*philo_routine(void *philo_void)
 		philo_eat(philo);
 		philo_sleep(philo);
 		pthread_mutex_lock(&philo->state_lock);
-        if (philo->state != DEAD && philo->state != FINISHED)
-        {
-		    philo->state = THINKING;
-		    print_state(philo);
-        }
+		if (philo->state != DEAD && philo->state != FINISHED)
+		{
+			philo->state = THINKING;
+			print_state(philo);
+		}
 	}
 	pthread_mutex_unlock(&philo->state_lock);
 	return (NULL);

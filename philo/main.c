@@ -34,7 +34,7 @@ static bool	parse_input(t_data *data, char **args, int n_args)
 	return (valid_input);
 }
 
-static void unlock_locked_forks(t_philo *philo)
+static void	unlock_locked_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->state_lock);
 	if (philo->state == EATING)
