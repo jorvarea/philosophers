@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/30 17:04:17 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/04 20:14:26 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,16 @@ static void unlock_locked_forks(t_philo *philo)
 		}
 	}
 	else if (philo->state == TAKEN_FORK)
-		pthread_mutex_unlock(&philo->fork);
+	{
+		if (philo->id % 2 == 0)
+			pthread_mutex_unlock(&philo->fork);
+		else
+		{
+			pthread_mutex_lock(&philo->next->state_lock);
+			pthread_mutex_unlock(&philo->next->fork);
+			pthread_mutex_unlock(&philo->next->state_lock);
+		}
+	}
 	pthread_mutex_unlock(&philo->state_lock);
 }
 
