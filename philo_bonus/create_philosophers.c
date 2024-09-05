@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:27:58 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 17:42:19 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:14:23 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ static void	init_philo(t_data *data, t_philo *curr_philo, t_philo *prev_philo,
 	curr_philo->time2eat = data->time2eat;
 	curr_philo->time2sleep = data->time2sleep;
 	curr_philo->forks_sem = data->forks_sem;
-	curr_philo->sem_name = generate_sem_name(id);
-	curr_philo->finished_eating_sem = sem_open(curr_philo->sem_name, O_CREAT,
-			0600, 1);
 	if (id != 0)
 	{
 		curr_philo->prev = prev_philo;

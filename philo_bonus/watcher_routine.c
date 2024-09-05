@@ -6,11 +6,24 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 18:49:59 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:42:43 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static sem_t init_sem_finished(void)
+{
+	sem_t sem;
+	
+	sem = sem_open("/finished", O_CREAT, 0600, 0);
+	if (sem == SEM_FAILED)
+	{
+		printf("Error: sem_open failed\n");
+		exit(EXIT_FAILURE);
+	}
+	return (sem);
+}
 
 static void	wait_watchers(pthread_t *watchers, int n_watchers)
 {
@@ -61,52 +74,13 @@ static void	update_death_time(t_philo *philo)
 		printf("Error: Couldn't get current time\n");
 }
 
-static bool	check_finish_condition(t_philo *philo, int t_ms)
-{
-	bool	finished;
-
-	if (t_ms + philo->time2eat <= philo->death_time)
-	{
-		sem_wait(philo->finished_eating_sem);
-		
-		sem_post(philo->finished_eating_sem);
-	}
-	else
-	{
-		usleep(philo->death_time - t_ms);
-	}
-	finished = t_ms > philo->death_time + 1;
-	if (finished)
-		philo->state = DEAD;
-	else if (!finished && philo->meals_needed >= 0
-		&& philo->meals_had >= philo->meals_needed)
-	{
-		finished = all_completed_meals(philo);
-		if (finished)
-			philo->state = FINISHED;
-	}
-	return (finished);
-}
-
 static void	*watcher_routine(void *watcher_void)
 {
 	t_watcher	*watcher;
 	int		t_ms;
 
 	watcher = (t_watcher *)watcher_void;
-	sem_wait(watcher->finished_sem);
-	while (!watcher->finished)
-	{
-		// Work in progress
-		t_ms = get_time_ms(watcher->philo);
-		if (t_ms >= 0)
-			watcher->finished = check_finish_condition(watcher->philo, t_ms);
-		else
-			printf("Error: Watcher couldn't get current time\n");
-		sem_post(watcher->finished_sem);
-		sem_wait(watcher->finished_sem);
-	}
-	sem_post(watcher->finished_sem);
+	waitpid(watcher->philo->pid);
 	kill_them_all(watcher->philo);
 	return (NULL);
 }
@@ -114,16 +88,21 @@ static void	*watcher_routine(void *watcher_void)
 void init_watchers(t_data *data, t_philo *philo)
 {
 	t_watcher	*watchers;
+	sem_t		watcher_finished;
 	bool		stop;
 
 	watchers = safe_malloc(data->n_philo * sizeof(t_watcher));
+	watcher_finished = init_sem_finished();
 	stop = false;
 	while (!stop)
 	{
-		watchers[philo->id].watcher_name = generate_watcher_sem_name(philo->id);
-		watchers[philo->id].finished_sem = sem_open(watchers[philo->id].watcher_name, O_CREAT, 0600, 1);
-		watchers[philo->id].finished = false;
-		pthread_create(&watchers[philo->id].thread_id, NULL, watcher_routine, philo);
+		watchers[philo->id].finished = watcher_finished;
+		watchers[philo->id].philo = philo;
+		if (pthread_create(&watchers[philo->id].thread_id, NULL, watcher_routine, &watchers[philo->id]) != 0)
+		{
+			printf("Error: pthread_failed\n");
+			exit(EXIT_FAILURE);
+		}
 		philo = philo->next;
 		if (philo->id == 0)
 			stop = true;

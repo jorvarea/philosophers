@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 17:24:16 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:24:43 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ static void init_sem_forks(t_data *data)
 	}
 }
 
-static void unlock_locked_forks(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->state_lock);
-	pthread_mutex_lock(&philo->prev->state_lock);
-	if (philo->state == EATING)
-		pthread_mutex_unlock(&philo->fork);
-	else if (philo->prev->state == EATING)
-		pthread_mutex_unlock(&philo->fork);
-	pthread_mutex_unlock(&philo->state_lock);
-	pthread_mutex_unlock(&philo->prev->state_lock);
-}
-
 static void	free_memory(t_data *data, t_philo *philo)
 {
 	t_philo	*next;
@@ -64,7 +52,6 @@ static void	free_memory(t_data *data, t_philo *philo)
 	i = 0;
 	while (i < data->n_philo)
 	{
-		pthread_join(philo->thread_id, NULL);
 		unlock_locked_forks(philo);
 		pthread_mutex_destroy(&philo->fork);
 		pthread_mutex_destroy(&philo->state_lock);
@@ -92,8 +79,7 @@ int	main(int argc, char **argv)
 			start_one_philo_routine(&data, philo_l);
 		else
 			start_philo_routines(&data, philo_l);
-		// Work in progress
-		watcher_routine(philo_l);
+		init_watchers(&data, philo_l);
 		free_memory(&data, philo_l);
 	}
 	else
