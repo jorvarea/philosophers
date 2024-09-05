@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/05 13:35:45 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:01:36 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ typedef struct s_watcher
 {
 	pthread_t	thread_id;
 	t_philo		*philo;
-	sem_t		finished;
+	sem_t		dead_sem;
+	bool		dead;
+	sem_t		completed_meals_sem;
+	int			*completed_meals;
 }					t_watcher;
 
 // ----------------------------------------------------- //

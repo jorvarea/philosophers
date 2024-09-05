@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/05 13:24:43 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:03:04 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	main(int argc, char **argv)
 			start_one_philo_routine(&data, philo_l);
 		else
 			start_philo_routines(&data, philo_l);
+		// work in progress
+		// each watcher has a variable to dictate if their philo is dead and a shared pointer to say if they have completed their meals
 		init_watchers(&data, philo_l);
 		free_memory(&data, philo_l);
 	}

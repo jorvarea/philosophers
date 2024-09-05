@@ -6,17 +6,17 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/05 13:42:43 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:02:03 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static sem_t init_sem_finished(void)
+static sem_t init_sem(char *name, int n)
 {
 	sem_t sem;
 	
-	sem = sem_open("/finished", O_CREAT, 0600, 0);
+	sem = sem_open(name, O_CREAT, 0600, n);
 	if (sem == SEM_FAILED)
 	{
 		printf("Error: sem_open failed\n");
@@ -88,16 +88,15 @@ static void	*watcher_routine(void *watcher_void)
 void init_watchers(t_data *data, t_philo *philo)
 {
 	t_watcher	*watchers;
-	sem_t		watcher_finished;
 	bool		stop;
 
 	watchers = safe_malloc(data->n_philo * sizeof(t_watcher));
-	watcher_finished = init_sem_finished();
 	stop = false;
 	while (!stop)
 	{
 		watchers[philo->id].finished = watcher_finished;
 		watchers[philo->id].philo = philo;
+		watchers[philo->id].completed_meals = philo;
 		if (pthread_create(&watchers[philo->id].thread_id, NULL, watcher_routine, &watchers[philo->id]) != 0)
 		{
 			printf("Error: pthread_failed\n");
