@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/05 14:01:36 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:37:46 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 # include <pthread.h>
 # include <semaphore.h>
+# include <signal.h>
+# include <sys/wait.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -97,10 +99,10 @@ typedef struct s_watcher
 {
 	pthread_t	thread_id;
 	t_philo		*philo;
-	sem_t		dead_sem;
+	sem_t		*dead_sem;
 	bool		dead;
-	sem_t		completed_meals_sem;
-	int			*completed_meals;
+	sem_t		*completed_meals_sem;
+	int			*nphilos_completed_meals;
 }					t_watcher;
 
 // ----------------------------------------------------- //
@@ -109,13 +111,15 @@ typedef struct s_watcher
 
 t_philo				*create_philosophers(t_data *data);
 void				philo_routine(t_philo *philo);
-bool 				is_philo_dead(t_philo *philo);
-void				init_watchers(t_data *data, t_philo *philo);
+void				*watcher_routine(void *watcher_void);
+void				monitor_watchers(t_watcher *watchers, int nphilos);
+t_watcher			*init_watchers(t_data *data, t_philo *philo);
+bool				is_philo_dead(t_philo *philo);
 void				start_philo_routines(t_data *data, t_philo *philo);
 void				start_one_philo_routine(t_data *data, t_philo *philo);
 void				philo_eat(t_philo *philo);
 void				philo_sleep(t_philo *philo);
-void 				check_death_while_usleep(int t_ms, t_philo *philo);
+void				check_death_while_usleep(int t_ms, t_philo *philo);
 
 // ----------------------- UTILS ----------------------- //
 
@@ -130,5 +134,8 @@ char				*generate_sem_name(int philo_id);
 char				*generate_watcher_sem_name(int philo_id);
 size_t				ft_strlen(const char *str);
 char				*ft_strjoin(char const *s1, char const *s2);
+size_t				ft_strlcpy(char *dest, const char *src, size_t size);
+void				safe_pthread(pthread_t *thread_id, void *routine,
+						void *data);
 
 #endif /* PHILOSOPHERS_H */

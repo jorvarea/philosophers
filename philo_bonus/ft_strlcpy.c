@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_death_while_usleep.c                         :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 21:45:42 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/06 12:24:25 by jorvarea         ###   ########.fr       */
+/*   Created: 2024/09/06 12:31:01 by jorvarea          #+#    #+#             */
+/*   Updated: 2024/09/06 12:31:16 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	check_death_while_usleep(int t_ms, t_philo *philo)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	int	i;
-	int	limit;
+	size_t	i;
 
+	if (size == 0)
+		return (ft_strlen(src));
 	i = 0;
-	limit = t_ms / 5;
-	while (i++ < limit && !is_philo_dead(philo))
-		usleep(5);
-	if (is_philo_dead(philo))
+	while (i < (size - 1) && src[i] != '\0')
 	{
-		philo->state = DEAD;
-		print_state(philo);
-		exit(EXIT_FAILURE);
+		dest[i] = src[i];
+		i++;
 	}
+	dest[i] = '\0';
+	while (src[i] != '\0')
+		i++;
+	return (i);
 }

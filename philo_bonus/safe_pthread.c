@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_death_while_usleep.c                         :+:      :+:    :+:   */
+/*   safe_pthread.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 21:45:42 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/06 12:24:25 by jorvarea         ###   ########.fr       */
+/*   Created: 2024/09/06 12:16:47 by jorvarea          #+#    #+#             */
+/*   Updated: 2024/09/06 12:20:08 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	check_death_while_usleep(int t_ms, t_philo *philo)
+void	safe_pthread(pthread_t *thread_id, void *routine, void *data)
 {
-	int	i;
-	int	limit;
-
-	i = 0;
-	limit = t_ms / 5;
-	while (i++ < limit && !is_philo_dead(philo))
-		usleep(5);
-	if (is_philo_dead(philo))
+	if (pthread_create(thread_id, NULL, routine, data) != 0)
 	{
-		philo->state = DEAD;
-		print_state(philo);
+		printf("Error: pthread_failed\n");
 		exit(EXIT_FAILURE);
 	}
 }

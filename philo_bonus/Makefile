@@ -13,7 +13,7 @@ else
   $(error No compiler found)
 endif
 
-NAME = philo
+NAME = philo_bonus
 FLAGS = -Wall -Wextra -Werror
 LINKS = -lpthread -lrt
 
@@ -23,7 +23,6 @@ LINKS = -lpthread -lrt
 
 SRC = main.c \
 	  check_death_while_usleep.c \
-	  generate_watcher_sem_name.c \
 	  create_philosophers.c \
 	  philo_routine.c \
 	  one_philo_routine.c \
@@ -31,14 +30,16 @@ SRC = main.c \
 	  philo_actions.c \
 	  get_time.c \
 	  watcher_routine.c \
+	  init_watchers.c \
       print_state.c \
       ft_atoi.c \
 	  ft_itoa.c \
 	  ft_strlen.c \
 	  ft_strjoin.c \
-	  safe_fork.c \
+	  ft_strlcpy.c \
 	  safe_malloc.c \
-	  safe_fork.c
+	  safe_fork.c \
+	  safe_pthread.c
 
 OBJ = $(SRC:%.c=obj/%.o)
 

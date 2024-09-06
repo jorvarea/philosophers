@@ -6,11 +6,32 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 14:49:57 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/08/16 14:54:14 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:30:20 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static char	*ft_strdup(const char *str)
+{
+	size_t	size;
+	char	*copy;
+
+	size = ft_strlen(str);
+	copy = malloc((size + 1) * sizeof(char));
+	if (copy)
+		ft_strlcpy(copy, str, size + 1);
+	return (copy);
+}
+
+static void	ft_swap_char(char *a, char *b)
+{
+	char	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 
 static int	ft_count_digits(int n)
 {

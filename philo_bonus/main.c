@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/05 14:03:04 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:23:58 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	parse_input(t_data *data, char **args, int n_args)
 	return (valid_input);
 }
 
-static void init_sem_forks(t_data *data)
+static void	init_forks_sem(t_data *data)
 {
 	data->forks_sem = sem_open("/forks", O_CREAT, 0600, data->n_philo);
 	if (data->forks_sem == SEM_FAILED)
@@ -44,29 +44,17 @@ static void init_sem_forks(t_data *data)
 	}
 }
 
-static void	free_memory(t_data *data, t_philo *philo)
+static void	free_memory(t_data *data)
 {
-	t_philo	*next;
-	int		i;
-
-	i = 0;
-	while (i < data->n_philo)
-	{
-		unlock_locked_forks(philo);
-		pthread_mutex_destroy(&philo->fork);
-		pthread_mutex_destroy(&philo->state_lock);
-		next = philo->next;
-		free(philo->sem_name);
-		free(philo);
-		philo = next;
-		i++;
-	}
+	sem_close(data->forks_sem);
+	sem_unlink("/forks");
 }
 
 int	main(int argc, char **argv)
 {
 	t_data		data;
 	t_philo		*philo_l;
+	t_watcher	*watchers;
 
 	if (argc == 5 || argc == 6)
 	{
@@ -79,10 +67,9 @@ int	main(int argc, char **argv)
 			start_one_philo_routine(&data, philo_l);
 		else
 			start_philo_routines(&data, philo_l);
-		// work in progress
-		// each watcher has a variable to dictate if their philo is dead and a shared pointer to say if they have completed their meals
-		init_watchers(&data, philo_l);
-		free_memory(&data, philo_l);
+		watchers = init_watchers(&data, philo_l);
+		monitor_watchers(watchers, data.n_philo);
+		free_memory(&data);
 	}
 	else
 		printf("Error: Incorrect number of arguments\n");

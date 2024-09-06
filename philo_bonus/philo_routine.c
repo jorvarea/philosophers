@@ -12,15 +12,15 @@
 
 #include "philosophers.h"
 
-bool is_philo_dead(t_philo *philo)
+bool	is_philo_dead(t_philo *philo)
 {
-	int t_ms;
-	
+	int	t_ms;
+
 	t_ms = get_time_ms(philo);
 	return (t_ms > philo->death_time);
 }
 
-static bool had_enough_meals(t_philo *philo)
+static bool	had_enough_meals(t_philo *philo)
 {
 	return (philo->meals_had >= philo->meals_needed);
 }
