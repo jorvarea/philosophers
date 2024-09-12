@@ -31,6 +31,7 @@ SRC = main.c \
 	  get_time.c \
 	  watcher_routine.c \
 	  init_watchers.c \
+	  monitor_watchers.c \
       print_state.c \
       ft_atoi.c \
 	  ft_itoa.c \
