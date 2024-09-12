@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:37:28 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/12 18:38:55 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:08:03 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,21 @@ void	monitor_watchers(t_watcher *watchers, int nphilos)
 	int		i;
 
 	stop = false;
-	i = 0;
-	while (i < nphilos && !stop)
+	while (!stop)
 	{
-		sem_wait(watchers[i].dead_sem);
-		sem_wait(watchers[i].completed_meals_sem);
-		if (watchers[i].dead)
-			stop = true;
-		else if (*watchers[i].nphilos_completed_meals == nphilos)
-			stop = true;
-		sem_post(watchers[i].dead_sem);
-		sem_post(watchers[i].completed_meals_sem);
-		i++;
+	    i = 0;
+        while (i < nphilos)
+        {
+            sem_wait(watchers[i].dead_sem);
+            sem_wait(watchers[i].completed_meals_sem);
+            if (watchers[i].dead)
+                stop = true;
+            else if (*(watchers[i].nphilos_completed_meals) == nphilos)
+                stop = true;
+            sem_post(watchers[i].dead_sem);
+            sem_post(watchers[i].completed_meals_sem);
+            i++;  
+        }
 	}
 	kill_them_all(watchers, nphilos);
 	free_watchers(watchers, nphilos);
