@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/06 12:37:46 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/12 21:45:59 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ typedef enum e_state
 {
 	THINKING = 0,
 	TAKEN_FORK = 1,
-	TAKEN_BOTH_FORKS = 2,
-	EATING = 3,
-	SLEEPING = 4,
-	DEAD = 5,
-	FINISHED = 6
+	EATING = 2,
+	SLEEPING = 3,
+	DEAD = 4,
+	FINISHED = 5
 }					t_state;
 
 // --------------------- STRUCTURES -------------------- //
