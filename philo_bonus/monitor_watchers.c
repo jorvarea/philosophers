@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:37:28 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/12 19:08:03 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:24:39 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,21 @@ static void	free_watchers(t_watcher *watchers, int n_watchers)
 	sem_close(watchers[0].completed_meals_sem);
 	sem_unlink("/completed_meals_sem");
 	free(watchers);
+}
+
+static bool	all_completed_meals(t_watcher *watchers, int nphilos)
+{
+	int		i;
+	bool	all;
+
+	all = true;
+	i = 0;
+	while (i < nphilos)
+	{
+		if (!watchers[i++].completed_meals)
+			all = false;
+	}
+	return (all);
 }
 
 static void	kill_them_all(t_watcher *watchers, int n_watchers)
@@ -50,7 +65,7 @@ void	monitor_watchers(t_watcher *watchers, int nphilos)
 			sem_wait(watchers[i].completed_meals_sem);
 			if (watchers[i].dead)
 				stop = true;
-			else if (*(watchers[i].nphilos_completed_meals) == nphilos)
+			else if (all_completed_meals(watchers, nphilos))
 				stop = true;
 			sem_post(watchers[i].dead_sem);
 			sem_post(watchers[i].completed_meals_sem);

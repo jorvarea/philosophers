@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/19 19:01:36 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:20:31 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,18 @@ t_watcher	*init_watchers(t_data *data, t_philo *philo)
 {
 	t_watcher	*watchers;
 	bool		stop;
-	int			nphilos_completed_meals;
 	sem_t		*dead_sem;
 	sem_t		*completed_meals_sem;
 
 	watchers = safe_malloc(data->n_philo * sizeof(t_watcher));
 	dead_sem = init_sem("/dead_sem", 1);
 	completed_meals_sem = init_sem("/completed_meals_sem", 1);
-	nphilos_completed_meals = 0;
 	stop = false;
 	while (!stop)
 	{
 		watchers[philo->id].dead = false;
 		watchers[philo->id].philo = philo;
-		watchers[philo->id].nphilos_completed_meals = &nphilos_completed_meals;
+		watchers[philo->id].completed_meals = false;
 		watchers[philo->id].dead_sem = dead_sem;
 		watchers[philo->id].completed_meals_sem = completed_meals_sem;
 		safe_pthread(&watchers[philo->id].thread_id, watcher_routine,
