@@ -43,19 +43,19 @@ void	monitor_watchers(t_watcher *watchers, int nphilos)
 	stop = false;
 	while (!stop)
 	{
-	    i = 0;
-        while (i < nphilos)
-        {
-            sem_wait(watchers[i].dead_sem);
-            sem_wait(watchers[i].completed_meals_sem);
-            if (watchers[i].dead)
-                stop = true;
-            else if (*(watchers[i].nphilos_completed_meals) == nphilos)
-                stop = true;
-            sem_post(watchers[i].dead_sem);
-            sem_post(watchers[i].completed_meals_sem);
-            i++;  
-        }
+		i = 0;
+		while (i < nphilos)
+		{
+			sem_wait(watchers[i].dead_sem);
+			sem_wait(watchers[i].completed_meals_sem);
+			if (watchers[i].dead)
+				stop = true;
+			else if (*(watchers[i].nphilos_completed_meals) == nphilos)
+				stop = true;
+			sem_post(watchers[i].dead_sem);
+			sem_post(watchers[i].completed_meals_sem);
+			i++;
+		}
 	}
 	kill_them_all(watchers, nphilos);
 	free_watchers(watchers, nphilos);
