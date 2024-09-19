@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:22:03 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/12 21:45:59 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:51:34 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void				start_philo_routines(t_data *data, t_philo *philo);
 void				start_one_philo_routine(t_data *data, t_philo *philo);
 void				philo_eat(t_philo *philo);
 void				philo_sleep(t_philo *philo);
-void				check_death_while_usleep(int t_ms, t_philo *philo);
+void				check_death_while_usleep(t_philo *philo, int time2action);
 
 // ----------------------- UTILS ----------------------- //
 

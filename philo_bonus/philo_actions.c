@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:44:22 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/12 21:46:13 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:49:51 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	philo_eat(t_philo *philo)
 	philo->state = EATING;
 	update_death_time(philo);
 	print_state(philo);
-	check_death_while_usleep(philo->time2eat * 1000, philo);
+	check_death_while_usleep(philo, philo->time2eat);
 	sem_post(philo->forks_sem);
 	sem_post(philo->forks_sem);
 }
@@ -46,5 +46,5 @@ void	philo_sleep(t_philo *philo)
 {
 	philo->state = SLEEPING;
 	print_state(philo);
-	check_death_while_usleep(philo->time2sleep * 1000, philo);
+	check_death_while_usleep(philo, philo->time2sleep);
 }
