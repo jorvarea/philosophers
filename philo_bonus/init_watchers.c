@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:11:50 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/12 18:54:50 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:01:36 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static sem_t	*init_sem(char *name, int n)
 {
 	sem_t	*sem;
 
+	sem_unlink(name);
 	sem = sem_open(name, O_CREAT, 0600, n);
 	if (sem == SEM_FAILED)
 	{

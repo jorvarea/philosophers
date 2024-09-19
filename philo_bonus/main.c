@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/06 12:23:58 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:40:51 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static bool	parse_input(t_data *data, char **args, int n_args)
 
 static void	init_forks_sem(t_data *data)
 {
+	sem_unlink("/forks");
 	data->forks_sem = sem_open("/forks", O_CREAT, 0600, data->n_philo);
 	if (data->forks_sem == SEM_FAILED)
 	{
