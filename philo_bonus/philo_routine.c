@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:25:35 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/19 16:48:39 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:05:48 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	is_philo_dead(t_philo *philo)
 	int	t_ms;
 
 	t_ms = get_time_ms(philo);
-	return (t_ms > philo->death_time);
+	return (t_ms > philo->death_time + DEATH_MARGIN);
 }
 
 static bool	had_enough_meals(t_philo *philo)
