@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:59:44 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/12 22:39:42 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:02:16 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	*watcher_routine(void *watcher_void)
 		printf("Error: waitpid failed\n");
 		exit(EXIT_FAILURE);
 	}
-	if (WEXITSTATUS(status) == 0)
+	if (WEXITSTATUS(status) == EXIT_FAILURE)
 	{
 		sem_wait(watcher->dead_sem);
 		watcher->dead = true;
 		sem_post(watcher->dead_sem);
 	}
-	else if (WEXITSTATUS(status) == 1)
+	else if (WEXITSTATUS(status) == EXIT_FAILURE)
 	{
 		sem_wait(watcher->completed_meals_sem);
 		*(watcher->nphilos_completed_meals) += 1;
