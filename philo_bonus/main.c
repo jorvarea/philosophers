@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 12:45:15 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/19 18:40:51 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:25:51 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,19 @@ static void	init_forks_sem(t_data *data)
 	}
 }
 
-static void	free_memory(t_data *data)
+static void	free_memory(t_data *data, t_philo *philo)
 {
+	t_philo	*next;
+	int		i;
+
+	i = 0;
+	while (i < data->n_philo)
+	{
+		next = philo->next;
+		free(philo);
+		philo = next;
+		i++;
+	}
 	sem_close(data->forks_sem);
 	sem_unlink("/forks");
 }
@@ -70,7 +81,7 @@ int	main(int argc, char **argv)
 			start_philo_routines(&data, philo_l);
 		watchers = init_watchers(&data, philo_l);
 		monitor_watchers(watchers, data.n_philo);
-		free_memory(&data);
+		free_memory(&data, philo_l);
 	}
 	else
 		printf("Error: Incorrect number of arguments\n");

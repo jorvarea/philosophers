@@ -14,7 +14,7 @@ else
 endif
 
 NAME = philo_bonus
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 LINKS = -lpthread -lrt
 
 ################################################################################
