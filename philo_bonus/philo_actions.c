@@ -6,7 +6,7 @@
 /*   By: jorvarea <jorvarea@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:44:22 by jorvarea          #+#    #+#             */
-/*   Updated: 2024/09/19 19:26:46 by jorvarea         ###   ########.fr       */
+/*   Updated: 2024/09/20 21:09:45 by jorvarea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,14 @@ void	philo_eat(t_philo *philo)
 {
 	pick_fork(philo);
 	pick_fork(philo);
-	philo->state = EATING;
-	update_death_time(philo);
-	print_state(philo);
-	check_death_while_usleep(philo, philo->time2eat);
-	philo->meals_had++;
+	if (!is_philo_dead(philo))
+	{
+		philo->state = EATING;
+		update_death_time(philo);
+		print_state(philo);
+		check_death_while_usleep(philo, philo->time2eat);
+		philo->meals_had++;
+	}
 	sem_post(philo->forks_sem);
 	sem_post(philo->forks_sem);
 }
