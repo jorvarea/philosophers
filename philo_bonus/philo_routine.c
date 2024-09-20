@@ -22,7 +22,7 @@ bool	is_philo_dead(t_philo *philo)
 
 static bool	had_enough_meals(t_philo *philo)
 {
-	return (philo->meals_needed != -1 
+	return (philo->meals_needed != -1
 		&& philo->meals_had >= philo->meals_needed);
 }
 
